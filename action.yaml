@@ -1,0 +1,27 @@
+name: "JSONify array"
+description: "Replace field in JSON with its JSON.stringify() version"
+author: Vladimir Levin
+branding:
+  icon: code
+  color: purple
+inputs:
+  input:
+    description: 'JSON to modify'
+    required: true
+  type:
+    description: 'Type of input data `["flat-json", "nested-json"]` (default: "flat-json")'
+    default: "flat-json"
+  key:
+    description: If `type="nested-json"` - which key should be used
+  from_file:
+    description: "Load json from file"
+    default: "false"
+  to_file:
+    description: Save result to file
+    default: "false"
+outputs:
+  result: # id of output
+    description: Filepath or JSON
+runs:
+  using: 'node20'
+  main: 'action/index.js'

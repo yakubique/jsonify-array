@@ -1,0 +1,27 @@
+{
+  "name": "jsonify-array",
+  "version": "1.0.0",
+  "description": "Replace field in JSON with its JSON.stringify() version",
+  "main": "src/index.ts",
+  "repository": {
+    "url": "https://github.com/yakubique/jsonify-array"
+  },
+  "scripts": {
+    "test": "yarn build && node ./action/index.js",
+    "build": "yarn clean && tsc --project tsconfig.json",
+    "clean": "rimraf -- action",
+    "release": "yarn clean && ncc build -m src/index.ts -o action"
+  },
+  "author": "Vladimir <opa-oz> Levin",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.10.1",
+    "@yakubique/atils": "^0.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.19",
+    "@vercel/ncc": "^0.38.1",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  }
+}

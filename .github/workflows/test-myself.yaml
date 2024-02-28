@@ -1,0 +1,42 @@
+name: Test `jsonify-array` action
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-jsonify-array:
+    runs-on: [ 'ubuntu-latest' ]
+    name: Test `nested-json`
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Test
+        id: test
+        uses: ./
+        with:
+          input: |
+            [ { "obj": {"id": 1 } } ]
+          type: 'nested-json'
+          key: 'obj'
+      - name: Check
+        run: |
+          echo "${{ steps.test.outputs.result }}"
+          test "${{ steps.test.outputs.result }}" = "[{obj:{\"id\":1}}]"
+
+  test-jsonify-array-flat:
+    runs-on: [ 'ubuntu-latest' ]
+    name: Test `flat-json`
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Test
+        id: test
+        uses: ./
+        with:
+          input: |
+            [ "1", "2", "3" ]
+      - name: Check
+        run: |
+          echo "${{ steps.test.outputs.result }}"
+          test "${{ steps.test.outputs.result }}" = "[\"1\",\"2\",\"3\"]"
