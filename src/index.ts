@@ -21,12 +21,21 @@ const setOutputs = buildOutput(Outputs);
             const item = input[i];
 
             if (inputs.type === Types.NestedJSON.toString()) {
-                item[inputs.key] = JSON.stringify(item[inputs.key]);
+                if (inputs.key.includes(',')) {
+                    const keys = inputs.key.split(',').map(s => s.trim()).filter(Boolean);
+                    keys.forEach((key) => {
+                        item[key] = JSON.stringify(item[key]);
+                    });
+                } else {
+                    item[inputs.key] = JSON.stringify(item[inputs.key]);
+                }
+
                 result.push(item);
             } else {
                 result.push(JSON.stringify(item));
             }
 
+            input[i] = null;
         }
 
         let res = outputJson(result, inputs.toFile);
